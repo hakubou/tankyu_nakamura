@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DamiaoCan/DamiaoCan.csproj" />
+    <Project Path="src/DemoOneTurn/DemoOneTurn.csproj" />
+    <Project Path="src/SetControlMode/SetControlMode.csproj" />
+    <Project Path="src/BackdriveTest/BackdriveTest.csproj" />
+    <Project Path="src/FrictionTest/FrictionTest.csproj" />
+    <Project Path="src/TorqueCalibration/TorqueCalibration.csproj" />
+    <Project Path="src/OpenLoopSwing/OpenLoopSwing.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DamiaoCan.Tests/DamiaoCan.Tests.csproj" />
+  </Folder>
+</Solution>
