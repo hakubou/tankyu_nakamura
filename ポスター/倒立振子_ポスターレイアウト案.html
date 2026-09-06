@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}img{max-width:100%}</style>
+<title>ポスターレイアウト案</title>
+<style>
+  :root{
+    --ink:#1b1f24; --sub:#5c6873; --line:#9aa5b0; --soft:#c7d0d8;
+    --fig:#e4ebf1; --figln:#9fb0be; --tab:#1f5c8b; --accent:#b3541e;
+    --paper:#fff;
+  }
+  body{margin:0;padding:18px 14px 40px;background:#e9edf0;color:var(--ink);
+       font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif}
+  .wrap{max-width:860px;margin:0 auto}
+  h1{font-size:17px;margin:0 0 4px}
+  .lead{font-size:12.5px;color:var(--sub);margin:0 0 12px;line-height:1.6}
+  .legend{display:flex;gap:14px;font-size:11.5px;color:var(--sub);margin:0 0 10px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:14px;height:9px;vertical-align:-1px;margin-right:4px;border:1px solid var(--figln)}
+  .legend i.f{background:var(--fig)}
+  .legend i.t{background:#fff;border-style:dashed}
+  .legend i.k{background:#fdf2e6;border-color:var(--accent)}
+
+  /* ===== A0 縦 ===== */
+  .sheet{aspect-ratio:841/1189;background:var(--paper);border:1px solid #b6c0c8;
+         box-shadow:0 2px 10px rgba(0,0,0,.10);container-type:size;box-sizing:border-box;
+         padding:2.0cqw;display:flex;flex-direction:column;gap:0.95cqw}
+
+  .blk{border:0.14cqw solid var(--line);border-radius:0.5cqw;position:relative;
+       display:flex;flex-direction:column;box-sizing:border-box;padding:1.5cqw 0.8cqw 0.7cqw;min-height:0;gap:0.45cqw}
+  .blk > .tag{position:absolute;top:-0.75cqw;left:1.4cqw;background:var(--tab);color:#fff;
+       font-size:0.82cqw;font-weight:700;padding:0.12cqw 0.7cqw;border-radius:0.3cqw;letter-spacing:.03em;white-space:nowrap}
+  .blk > .mm{position:absolute;top:0.35cqw;right:0.7cqw;font-size:0.72cqw;color:var(--sub)}
+
+  .cols{flex:640 1 0;display:flex;gap:0.95cqw;min-height:0}
+  .col{flex:1;display:flex;flex-direction:column;gap:0.95cqw;min-width:0}
+
+  .fig{background:var(--fig);border:0.12cqw dashed var(--figln);border-radius:0.35cqw;
+       display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.25cqw;
+       text-align:center;padding:0.3cqw;min-height:0;overflow:hidden}
+  .fig b{font-size:0.92cqw;color:#2c4a60}
+  .fig span{font-size:0.76cqw;color:#4a6274;line-height:1.35}
+
+  .txt{border:0.12cqw dashed var(--soft);border-radius:0.35cqw;padding:0.4cqw 0.55cqw;
+       font-size:0.76cqw;line-height:1.42;color:var(--sub);min-height:0;overflow:hidden}
+  .txt b{color:var(--ink);font-weight:700}
+
+  .key{background:#fdf2e6;border:0.14cqw solid var(--accent);border-radius:0.35cqw;
+       padding:0.4cqw 0.55cqw;font-size:0.78cqw;line-height:1.4;color:#7a3a12;min-height:0;overflow:hidden}
+  .key b{color:#8f3f10}
+
+  .eq{border:0.12cqw dashed var(--soft);background:#fafbfc;border-radius:0.35cqw;
+      padding:0.4cqw 0.55cqw;font-size:0.78cqw;line-height:1.45;color:var(--sub);
+      font-family:"Hiragino Sans",system-ui;min-height:0;overflow:hidden}
+  .eq b{color:var(--ink)}
+
+  .ttl{flex:70 0 0;border:0.14cqw solid var(--line);border-radius:0.5cqw;display:flex;
+       align-items:center;justify-content:space-between;padding:0 1.4cqw;gap:1cqw;background:#f6f8fa}
+  .ttl .m{font-size:1.5cqw;font-weight:800;line-height:1.25}
+  .ttl .m em{display:block;font-style:normal;font-size:0.85cqw;font-weight:400;color:var(--sub);margin-top:0.25cqw}
+  .ttl .r{font-size:0.85cqw;color:var(--sub);text-align:right;white-space:nowrap;line-height:1.5}
+
+  .band{flex:0 0 auto}
+  .bd{flex:133 0 0}
+  .res{flex:177 0 0}
+  .sum{flex:89 0 0}
+
+  .row{display:flex;gap:0.7cqw;flex:1;min-height:0}
+  .row > *{flex:1;min-width:0}
+</style>
+
+<div class="wrap">
+<h1>回転型倒立振子 ポスター ― レイアウト案（A0 縦・841 × 1189 mm）</h1>
+<p class="lead">読み順は「左列を上から下 → 中列 → 右列 → 全幅帯」。数式が要る節を中列、図が主役の節を左列と全幅帯に置いています。括弧内は実寸と、全体面積に占める割合です。</p>
+<div class="legend">
+  <span><i class="f"></i>図・写真の領域</span>
+  <span><i class="t"></i>本文・数式の領域</span>
+  <span><i class="k"></i>強調ボックス（発表の要点3つ）</span>
+</div>
+
+<div class="sheet">
+
+  <!-- タイトル帯 -->
+  <div class="ttl">
+    <div class="m">回転型倒立振子（古田式振子）の製作とモデルに基づく制御
+      <em>Swing-up and Stabilization of a Rotary Inverted Pendulum</em></div>
+    <div class="r">氏名 / 所属<br>2026</div>
+  </div>
+
+  <!-- 3段組 -->
+  <div class="cols">
+
+    <!-- ===== 左列 ===== -->
+    <div class="col">
+
+      <div class="blk" style="flex:202 0 0">
+        <span class="tag">1. 背景と目的</span><span class="mm">260 × 202 mm ／ 5.3%</span>
+        <div class="txt" style="flex:1">
+          <b>本文のみ・図なし／約 330 字（3段落）</b><br>
+          ① 倒立振子は「不安定・非線形・劣駆動」が同時に成立する制御の標準問題。<br>
+          ② 台車型は直線レールの長さが可動範囲を縛る。回転型（古田式）はアームが無限に回れるため振り上げ距離の制約がない。<br>
+          ③ 本研究の目的＝Furuta 振子を自作し、振り上げ→捕捉→倒立保持を制御則の切替で成立させる。
+        </div>
+      </div>
+
+      <div class="blk" style="flex:428 0 0">
+        <span class="tag">2. 装置構成</span><span class="mm">260 × 428 mm ／ 11.1%</span>
+        <div class="fig" style="flex:42 0 0">
+          <b>図1　装置写真＋座標定義</b>
+          <span>実機写真に θ（アーム角）, α（振子角）, トルク τ を重ねる<br>α=0 が真上・α=π が真下を明示<br>260 × 175 mm</span>
+        </div>
+        <div class="fig" style="flex:24 0 0">
+          <b>図2　システム系統図</b>
+          <span>PC ―USB/CAN 1 Mbps― モータ ／ E8P ―ESP32― USB<br>「マイコンに制御則は載せない」を図中に注記<br>260 × 100 mm</span>
+        </div>
+        <div class="txt" style="flex:20 0 0">
+          <b>仕様表（4行 × 2列）</b><br>
+          モータ DM-J4310-2EC（減速比 10:1・定格 3 N·m）／ MIT モードで kp=kd=0 の純トルク指令 ／
+          エンコーダ E8P-512（2048 count/rev＝0.176°）／ 通信 CAN 1 Mbps
+        </div>
+        <div class="txt" style="flex:14 0 0">
+          <b>本文 2〜3 行</b>：準ダイレクトドライブ（QDD）を選んだ理由 ― 低減速比でバックドライブ性を確保し、トルク指令をそのまま出す。
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== 中列 ===== -->
+    <div class="col">
+
+      <div class="blk" style="flex:338 0 0">
+        <span class="tag">3. 運動方程式</span><span class="mm">260 × 338 mm ／ 8.8%</span>
+        <div class="txt" style="flex:12 0 0">
+          <b>導入 2 行</b>：Lagrange 法で導出（Coriolis 項の符号誤りを避けるため数式処理系を使用）。
+        </div>
+        <div class="eq" style="flex:44 0 0">
+          <b>数式ブロック（最重要・大きめの級数で）</b><br>
+          D(q)q̈ + C(q,q̇)q̇ + g(q) = τ<br>
+          D の成分（sin²α と非対角 P₃cosα を含む形）／ C の成分 ／ g = (0, −P₄g sinα)ᵀ<br>
+          260 × 148 mm
+        </div>
+        <div class="eq" style="flex:18 0 0">
+          <b>パラメータ束の定義</b><br>
+          P₁ = J_r + m_p L_r²　P₂ = J_p + m_p l_p²　P₃ = m_p L_r l_p　P₄ = m_p l_p<br>
+          → 未知量が 4 つに集約される（＝同定できる）
+        </div>
+        <div class="txt" style="flex:26 0 0">
+          <b>構造の読み方・箇条書き 3 点</b><br>
+          ・sin²α 項 → 姿勢によって有効慣性が変わる（非線形の源）<br>
+          ・非対角項 P₃cosα → アームと振子の連成。これが唯一の「効かせ方」<br>
+          ・θ は循環座標（重力の復元力なし）→ 不安定なのは α だけという構造
+        </div>
+      </div>
+
+      <div class="blk" style="flex:292 0 0">
+        <span class="tag">4. パラメータ同定</span><span class="mm">260 × 292 mm ／ 7.6%</span>
+        <div class="txt" style="flex:22 0 0">
+          <b>手法 3〜4 行</b>：正弦加振でアーム慣性を同定。慣性トルクは sin 位相・摩擦は cos 位相で直交するため、
+          τ_rms² を ω⁴ の一次式で回帰すれば傾きから J が分離できる（可動範囲 ±45° の制約下でも成立）。
+        </div>
+        <div class="fig" style="flex:44 0 0">
+          <b>図3　同定結果のグラフ</b>
+          <span>横軸 ω⁴ ／ 縦軸 τ_rms² の測定点と回帰直線<br>傾き = ½J²A²、切片 = 摩擦項<br>260 × 128 mm</span>
+        </div>
+        <div class="key" style="flex:30 0 0">
+          <b>【要点 ②】</b> J_r = 2.13 × 10⁻³ kg·m²。質量からの見積りの <b>5.3 倍</b>。<br>
+          原因は減速比 10:1 による <b>ロータ慣性の反映（10² = 100 倍）</b>。
+          QDD の代償を実測で示せた点が本研究の見どころ。
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== 右列 ===== -->
+    <div class="col">
+
+      <div class="blk" style="flex:202 0 0">
+        <span class="tag">5. 線形化と不安定性</span><span class="mm">260 × 202 mm ／ 5.3%</span>
+        <div class="eq" style="flex:34 0 0">
+          <b>数式</b>：α = 0 まわりで線形化 → ẋ = Ax + Bu。<br>
+          Δ = P₁P₂ − P₃² &gt; 0、A の要素と B の要素を 3 行で提示。
+        </div>
+        <div class="key" style="flex:36 0 0">
+          <b>【要点 ①】</b> 不安定極 λ = √(P₁P₄g/Δ) = <b>11.1 rad/s</b>、時定数 <b>90 ms</b>。<br>
+          「90 ms 放置すると誤差が e 倍」＝制御周期と遅れの許容値がここから決まる。
+        </div>
+        <div class="txt" style="flex:30 0 0">
+          <b>本文 3 行</b>：この時定数から要求スペック（サンプリング周期・通信遅れ・センサ分解能）を逆算した、という流れを書く。
+        </div>
+      </div>
+
+      <div class="blk" style="flex:428 0 0">
+        <span class="tag">6. 制御器設計</span><span class="mm">260 × 428 mm ＋ 下の全幅帯 ／ 合計 21.8%</span>
+        <div class="txt" style="flex:32 0 0">
+          <b>6-1　倒立保持：LQR ＋ カルマンフィルタ</b><br>
+          Riccati 方程式、重み Q は Bryson 則（許容偏差の逆二乗）で決定。速度は差分でなく推定
+          （0.176° の量子化を微分するとノイズが乗るため）。分離定理に言及。
+        </div>
+        <div class="txt" style="flex:27 0 0">
+          <b>6-2　振り上げ：エネルギー整形</b><br>
+          u = k_e(E − E_top)·sign(α̇ cos α)。V = ½(E − E_top)² の時間微分が半負定 → 単調に近づく。
+          ただし到達は理論上無限時間 → <b>捕捉（切替）が原理的に必要</b>。
+        </div>
+        <div class="key" style="flex:26 0 0">
+          <b>【要点 ③】6-3　切替：最小射影法</b><br>
+          W(x) = min(V(x), (E − E_r)² + c) で 2 つの制御則を統合。LQR の Lyapunov 行列 P から
+          吸引領域を見積り、切替しきい値を <b>勘でなく計算で</b>決めた。
+        </div>
+        <div class="txt" style="flex:15 0 0">
+          <b>6-4　摩擦補償</b>：静止摩擦 0.147 N·m。平衡点近傍では必要トルクが 0 に近づくため必ず不感帯に入る、という原理的問題と、符号関数モデル＋tanh 正則化による補償。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ブロック線図・全幅帯（6章の一部） -->
+  <div class="blk bd">
+    <span class="tag">図4　制御系全体のブロック線図（6章）</span><span class="mm">801 × 133 mm ／ 10.7%</span>
+    <div class="row">
+      <div class="fig" style="flex:78 0 0">
+        <b>図4　ブロック線図（全幅・横長に描く）</b>
+        <span>切替器 →〔振り上げ則／LQR〕→ 摩擦補償 → モータ（トルク） → Furuta 振子<br>
+        振子 → エンコーダ（量子化・遅れ）→ カルマンフィルタ → 推定状態 x̂ → 切替器・LQR へ帰還<br>
+        各枝に「実装場所（PC / ESP32 / モータ内部）」を色で区別</span>
+      </div>
+      <div class="txt" style="flex:22 0 0">
+        <b>注記ボックス「これは PID ではない」</b><br>
+        誤差の比例・積分・微分ではなく、<b>モデルから求めた状態フィードバック</b>である。
+        4 状態それぞれに個別のゲインが掛かり、ゲインは Riccati 方程式の解として決まる。
+      </div>
+    </div>
+  </div>
+
+  <!-- 実験結果・全幅帯 -->
+  <div class="blk res">
+    <span class="tag">7. 実験結果</span><span class="mm">801 × 177 mm ／ 14.2%</span>
+    <div class="row">
+      <div class="fig">
+        <b>図5　倒立保持の時系列</b>
+        <span>α, θ, 指令トルク u の 3 段プロット<br>保持時間と定常偏差を明示<br>約 260 × 145 mm</span>
+      </div>
+      <div class="fig">
+        <b>図6　外乱応答</b>
+        <span>指で弾いた瞬間からの復帰波形<br>整定時間を数値で入れる<br>約 260 × 145 mm</span>
+      </div>
+      <div class="fig">
+        <b>図7　制御周期と破綻境界</b>
+        <span>周期を変えたときの成否<br>理論値 12.8 ms との一致を示す<br>約 260 × 145 mm</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- まとめ帯 -->
+  <div class="blk sum">
+    <span class="tag">8. まとめ・今後 ／ 参考文献</span><span class="mm">801 × 89 mm ／ 7.1%</span>
+    <div class="row">
+      <div class="txt" style="flex:64 0 0">
+        <b>まとめ（箇条書き 3 点＋今後 1 行）</b><br>
+        理論値と実測が一致した 3 点 ― 不安定極の時定数 90 ms ／ 離散化の限界 12.8 ms ／ 反映慣性 5.3 倍。<br>
+        今後：摩擦補償の高度化、実時間性の確保、外乱オブザーバの追加。
+      </div>
+      <div class="txt" style="flex:36 0 0">
+        <b>参考文献 4 件</b>（古田らの原論文、最小射影法、エネルギー整形、LQR の教科書）＋ 謝辞 1 行
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</head><body></body></html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light}</style>
+<title>回転型倒立振子 ポスター</title>
+<style>
+  :root{
+    --ink:#16202a; --sub:#4a5a68; --line:#8fa0ad; --soft:#c9d3db;
+    --tab:#1f5c8b; --tab2:#2b6f45; --accent:#b3541e; --keybg:#fdf3e8;
+    --figbg:#f6f9fb; --grid:#c8d4dd;
+  }
+  html,body{margin:0;padding:0}
+  body{background:#e9edf0;color:var(--ink);
+       font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+       -webkit-font-smoothing:antialiased}
+  .stage{padding:14px;display:flex;justify-content:center}
+  .sheet{width:min(100%,900px);aspect-ratio:841/1189;background:#fff;
+         border:1px solid #b6c0c8;box-shadow:0 3px 14px rgba(0,0,0,.12);
+         container-type:size;box-sizing:border-box;
+         padding:2.0cqw;display:flex;flex-direction:column;gap:0.95cqw}
+  @media print{
+    @page{size:A0 portrait;margin:0}
+    body{background:#fff} .stage{padding:0}
+    .sheet{width:841mm;height:1189mm;border:0;box-shadow:none}
+  }
+
+  /* ---- ブロック ---- */
+  .blk{border:0.16cqw solid var(--line);border-radius:0.55cqw;position:relative;
+       display:flex;flex-direction:column;box-sizing:border-box;
+       padding:1.55cqw 0.85cqw 0.75cqw;min-height:0;gap:0.5cqw}
+  .blk > .tag{position:absolute;top:-0.8cqw;left:1.5cqw;background:var(--tab);color:#fff;
+       font-size:1.0cqw;font-weight:700;padding:0.14cqw 0.85cqw;border-radius:0.32cqw;
+       letter-spacing:.04em;white-space:nowrap;line-height:1.5}
+
+  .cols{flex:640 1 0;display:flex;gap:0.95cqw;min-height:0}
+  .col{flex:1;display:flex;flex-direction:column;gap:0.95cqw;min-width:0}
+
+  h4{margin:0;font-size:1.0cqw;color:var(--tab);font-weight:700;letter-spacing:.02em}
+  p{margin:0;font-size:0.95cqw;line-height:1.5}
+  ul{margin:0;padding-left:1.25cqw;font-size:0.95cqw;line-height:1.5}
+  li{margin:0.1cqw 0}
+  li::marker{color:var(--tab)}
+  b{font-weight:700}
+  .u{color:var(--sub)}
+
+  /* ---- 図 ---- */
+  .fig{background:var(--figbg);border:0.12cqw solid var(--soft);border-radius:0.4cqw;
+       padding:0.35cqw;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .fig svg{width:100%;height:100%;display:block;flex:1;min-height:0}
+  .cap{font-size:0.8cqw;color:var(--sub);margin-top:0.2cqw;line-height:1.35;flex:0 0 auto}
+
+  /* ---- 数式 ---- */
+  .eq{background:#f7f9fa;border-left:0.35cqw solid var(--tab);border-radius:0.25cqw;
+      padding:0.45cqw 0.7cqw;font-size:0.95cqw;line-height:1.55;min-height:0;overflow:hidden}
+  .eq .m{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:1.05cqw}
+  .mat{display:inline-flex;align-items:center;gap:0.2cqw;vertical-align:middle}
+  .mat .br{font-size:2.4cqw;line-height:0.9;color:var(--sub);font-weight:200}
+  .mat table{border-collapse:collapse;font-size:0.9cqw}
+  .mat td{padding:0.05cqw 0.4cqw;text-align:center;white-space:nowrap}
+
+  /* ---- 強調 ---- */
+  .key{background:var(--keybg);border:0.16cqw solid var(--accent);border-radius:0.4cqw;
+       padding:0.5cqw 0.7cqw;font-size:0.95cqw;line-height:1.5;color:#6d3210;min-height:0;overflow:hidden}
+  .key .h{display:block;font-weight:700;color:#8f3f10;font-size:0.95cqw;margin-bottom:0.15cqw}
+  .key b{color:#8f3f10}
+
+  /* ---- 表 ---- */
+  table.sp{width:100%;border-collapse:collapse;font-size:0.88cqw;line-height:1.4}
+  table.sp th,table.sp td{border-bottom:0.08cqw solid var(--soft);padding:0.16cqw 0.3cqw;text-align:left;vertical-align:top}
+  table.sp th{color:var(--sub);font-weight:600;white-space:nowrap;width:30%}
+
+  /* ---- タイトル ---- */
+  .ttl{flex:70 0 0;border:0.16cqw solid var(--tab);border-radius:0.55cqw;display:flex;
+       align-items:center;justify-content:space-between;padding:0 1.5cqw;gap:1cqw;
+       background:linear-gradient(180deg,#f4f8fb,#e8f0f6)}
+  .ttl .m{font-size:1.85cqw;font-weight:800;line-height:1.22;letter-spacing:.01em}
+  .ttl .m em{display:block;font-style:normal;font-size:0.85cqw;font-weight:400;
+             color:var(--sub);margin-top:0.3cqw;letter-spacing:.02em}
+  .ttl .r{font-size:0.9cqw;color:var(--sub);text-align:right;white-space:nowrap;line-height:1.6}
+
+  .bd{flex:133 0 0} .res{flex:177 0 0} .sum{flex:89 0 0}
+  .row{display:flex;gap:0.85cqw;flex:1;min-height:0}
+  .row > *{flex:1;min-width:0}
+
+  /* SVG 共通 */
+  .sv{font-family:"Hiragino Sans",system-ui,sans-serif}
+  .sv text{fill:#16202a}
+  .sv .ax{stroke:#5b6b78;stroke-width:1.4;fill:none}
+  .sv .gd{stroke:#d3dde4;stroke-width:1}
+  .sv .bx{fill:#fff;stroke:#37536b;stroke-width:1.6}
+  .sv .bx2{fill:#eaf2f8;stroke:#1f5c8b;stroke-width:1.6}
+  .sv .ar{stroke:#37536b;stroke-width:1.6;fill:none;marker-end:url(#ah)}
+  .sv .arf{stroke:#b3541e;stroke-width:1.6;fill:none;stroke-dasharray:5 3;marker-end:url(#ahf)}
+</style>
+<div class="stage"><div class="sheet">
+
+<div class="ttl">
+  <div class="m">回転型倒立振子の製作と、モデルに基づく振り上げ・倒立制御
+    <em>Modeling, Swing-up and Stabilization of a Rotary Inverted Pendulum</em></div>
+  <div class="r">氏名 ／ 所属<br>2026</div>
+</div>
+
+<div class="cols">
+
+<!-- ================= 左列 ================= -->
+<div class="col">
+
+  <div class="blk" style="flex:202 0 0">
+    <span class="tag">1. 背景と目的</span>
+    <ul style="font-size:1.0cqw;line-height:1.62">
+      <li>倒立振子は<b>不安定・非線形・劣駆動</b>が同時に成立する制御の標準問題。</li>
+      <li>アームの先端で振子を支える<b>回転型（古田式）</b>は、古田らが 1992 年に提案した形式。</li>
+      <li>台車型は直線レールの長さが可動範囲を縛る。<b>回転型（古田式）はアームが無限に回れる</b>ため、振り上げに使える距離の制約がない。</li>
+      <li>入力はアーム軸のトルク τ ただ一つ、制御したい自由度はアーム角 θ と振子角 α の二つ。</li>
+      <li><b>目的：</b>実機を製作し、モデルから設計した制御則の切替によって<b>振り上げ → 捕捉 → 倒立保持</b>を成立させる。</li>
+    </ul>
+  </div>
+
+  <div class="blk" style="flex:428 0 0">
+    <span class="tag">2. 装置構成</span>
+
+    <div class="fig" style="flex:42 0 0">
+      <svg class="sv" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet">
+        <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 z" fill="#37536b"/></marker>
+          <marker id="ahf" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 z" fill="#b3541e"/></marker></defs>
+        <rect x="90" y="212" width="60" height="34" rx="3" class="bx2"/>
+        <text x="120" y="234" font-size="13" text-anchor="middle">モータ</text>
+        <line x1="120" y1="212" x2="120" y2="100" stroke="#37536b" stroke-width="5"/>
+        <line x1="120" y1="100" x2="272" y2="132" stroke="#37536b" stroke-width="7" stroke-linecap="round"/>
+        <text x="188" y="102" font-size="13" text-anchor="middle">アーム  L_r</text>
+        <line x1="272" y1="132" x2="272" y2="30" stroke="#9aa8b4" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <line x1="272" y1="132" x2="272" y2="238" stroke="#c3ccd4" stroke-width="1.4" stroke-dasharray="3 5"/>
+        <line x1="272" y1="132" x2="239" y2="42" stroke="#b3541e" stroke-width="5.5" stroke-linecap="round"/>
+        <circle cx="239" cy="42" r="10" fill="#b3541e"/>
+        <circle cx="272" cy="132" r="5.5" fill="#fff" stroke="#37536b" stroke-width="2"/>
+        <path d="M272 84 A48 48 0 0 0 255.5 87.1" class="ax"/>
+        <text x="258" y="74" font-size="14" font-style="italic">α</text>
+        <text x="286" y="36" font-size="12" fill="#4a5a68">α = 0（真上）</text>
+        <text x="282" y="232" font-size="12" fill="#4a5a68">α = π（真下）</text>
+        <text x="300" y="140" font-size="12" fill="#4a5a68">振子  l_p</text>
+        <path d="M92 165 A28 9 0 0 0 148 165" class="ax" marker-end="url(#ah)"/>
+        <text x="156" y="169" font-size="14" font-style="italic">θ</text>
+        <path d="M92 190 A28 9 0 0 0 148 190" class="arf" stroke-dasharray="0"/>
+        <text x="156" y="194" font-size="14" font-style="italic" fill="#b3541e">τ</text>
+        <text x="10" y="24" font-size="12" fill="#4a5a68">入力はトルク τ のみ（劣駆動）</text>
+      </svg>
+      <div class="cap">図1　装置の模式図と座標定義。α は鉛直上向きを 0 とする。</div>
+    </div>
+
+    <div class="fig" style="flex:25 0 0">
+      <svg class="sv" viewBox="0 0 560 190" preserveAspectRatio="xMidYMid meet">
+        <rect x="8" y="30" width="140" height="104" rx="4" class="bx2"/>
+        <text x="78" y="56" font-size="15" text-anchor="middle" font-weight="700">PC（C#）</text>
+        <text x="78" y="78" font-size="13" text-anchor="middle">制御周期 300 Hz</text>
+        <text x="78" y="97" font-size="13" text-anchor="middle">振り上げ・切替・LQR</text>
+        <text x="78" y="116" font-size="13" text-anchor="middle">カルマンフィルタ</text>
+        <rect x="182" y="30" width="112" height="44" rx="4" class="bx"/>
+        <text x="238" y="49" font-size="13" text-anchor="middle">USB-CAN</text>
+        <text x="238" y="66" font-size="13" text-anchor="middle">CAN 1 Mbps</text>
+        <rect x="326" y="30" width="122" height="44" rx="4" class="bx"/>
+        <text x="387" y="49" font-size="13" text-anchor="middle">DM-J4310-2EC</text>
+        <text x="387" y="66" font-size="13" text-anchor="middle">減速比 10:1</text>
+        <rect x="182" y="112" width="112" height="44" rx="4" class="bx"/>
+        <text x="238" y="131" font-size="13" text-anchor="middle">Nucleo G474</text>
+        <text x="238" y="148" font-size="13" text-anchor="middle">1 kHz 送信</text>
+        <rect x="326" y="112" width="122" height="44" rx="4" class="bx"/>
+        <text x="387" y="131" font-size="13" text-anchor="middle">E8P-512</text>
+        <text x="387" y="148" font-size="13" text-anchor="middle">0.176°/count</text>
+        <rect x="480" y="58" width="72" height="70" rx="4" class="bx2"/>
+        <text x="516" y="88" font-size="13" text-anchor="middle">アーム</text>
+        <text x="516" y="107" font-size="13" text-anchor="middle">＋振子</text>
+        <line x1="148" y1="52" x2="176" y2="52" class="ar"/>
+        <line x1="294" y1="52" x2="320" y2="52" class="ar"/>
+        <path d="M448 52 L468 52 L468 74" class="ar"/>
+        <path d="M492 128 L492 148 L454 148" class="ar"/>
+        <line x1="326" y1="134" x2="298" y2="134" class="ar"/>
+        <path d="M182 134 L162 134 L162 78 L120 78" class="ar"/>
+        <text x="8" y="180" font-size="12.5" fill="#4a5a68">マイコンは角度の読み出しと送信のみ。制御則はすべて PC 側に置く。</text>
+      </svg>
+      <div class="cap">図2　システム系統図。</div>
+    </div>
+
+    <table class="sp" style="flex:0 0 auto">
+      <tr><th>モータ</th><td>DM-J4310-2EC　定格 3 N·m、減速比 10:1</td></tr>
+      <tr><th>指令</th><td>MIT モードで kp = kd = 0 の<b>純トルク指令</b></td></tr>
+      <tr><th>振子角</th><td>E8P-512（4逓倍 2048 count/回転 ＝ 0.176°）</td></tr>
+      <tr><th>制御周期</th><td>300 Hz（実測 3.333 ± 0.563 ms、取りこぼし 0%）</td></tr>
+    </table>
+
+    <p style="font-size:0.9cqw" class="u">減速比を 10:1 に抑えた<b>準ダイレクトドライブ（QDD）</b>構成。指令したトルクがほぼそのまま出力軸に出る一方、代償が 4 章に現れる。</p>
+  </div>
+
+</div>
+<!-- ================= 中列 ================= -->
+<div class="col">
+
+  <div class="blk" style="flex:338 0 0">
+    <span class="tag">3. 運動方程式</span>
+    <p class="u" style="font-size:0.9cqw">Lagrange 法で導出（Coriolis 項の符号を誤らないよう数式処理系で機械的に展開）。</p>
+
+    <div class="eq" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0.5cqw">
+      <div class="m" style="text-align:center">D(q) q̈ + C(q, q̇) q̇ + g(q) = τ　　q = (θ, α)ᵀ</div>
+      <div>D =
+        <span class="mat"><span class="br">⎡</span><table>
+          <tr><td>P₁ + P₂ sin²α</td><td>P₃ cos α</td></tr>
+          <tr><td>P₃ cos α</td><td>P₂</td></tr></table><span class="br">⎤</span></span>
+      </div>
+      <div>C =
+        <span class="mat"><span class="br">⎡</span><table>
+          <tr><td>½P₂ sin2α · α̇</td><td>½P₂ sin2α · θ̇ − P₃ sinα · α̇</td></tr>
+          <tr><td>−½P₂ sin2α · θ̇</td><td>0</td></tr></table><span class="br">⎤</span></span>
+      </div>
+      <div class="m">g = ( 0,　−P₄ g sin α )ᵀ　　τ = ( u − b_r θ̇,　−b_p α̇ )ᵀ</div>
+    </div>
+
+    <div class="eq" style="border-left-color:#2b6f45">
+      P₁ = J_r + m_p L_r²　　P₂ = J_p + m_p l_p²<br>
+      P₃ = m_p L_r l_p　　　P₄ = m_p l_p
+      <span class="u">→ 未知量が 4 つに集約される</span>
+    </div>
+
+    <ul>
+      <li><b>sin²α</b>：姿勢によって有効慣性が変わる（非線形の源）。</li>
+      <li><b>P₃ cos α</b>：アームと振子の連成。振子を動かせる唯一の経路。</li>
+      <li><b>θ は循環座標</b>（重力の復元力を持たない）→ 不安定なのは α だけ。</li>
+    </ul>
+  </div>
+
+  <div class="blk" style="flex:292 0 0">
+    <span class="tag">4. パラメータ同定</span>
+    <ul style="font-size:0.9cqw">
+      <li><b>振子側</b>：自由振動の周期と対数減衰から J_p、b_p を実測。</li>
+      <li><b>アーム側</b>：±5°・4〜9 Hz で正弦加振。慣性トルクは sin 位相、摩擦は cos 位相で<b>直交する</b>ため、τ_rms² を ω⁴ の一次式に回帰すれば傾きから J だけを取り出せる。</li>
+      <li><b>検証</b>：アームを正弦駆動して周波数を掃引。振子が共振すると反力がモータのトルクに現れる（図3）。</li>
+    </ul>
+
+    <div class="fig" style="flex:1">
+      <svg class="sv" viewBox="0 0 440 212" preserveAspectRatio="xMidYMid meet">
+        <line x1="50" y1="30" x2="50" y2="178" class="ax"/>
+        <line x1="50" y1="178" x2="418" y2="178" class="ax"/>
+        <g class="gd">
+          <line x1="50" y1="145" x2="418" y2="145"/><line x1="50" y1="112" x2="418" y2="112"/>
+          <line x1="50" y1="79" x2="418" y2="79"/><line x1="50" y1="46" x2="418" y2="46"/>
+        </g>
+        <g font-size="11" fill="#4a5a68" text-anchor="end">
+          <text x="45" y="182">0.130</text><text x="45" y="149">0.135</text>
+          <text x="45" y="116">0.140</text><text x="45" y="83">0.145</text><text x="45" y="50">0.150</text>
+        </g>
+        <g font-size="11" fill="#4a5a68" text-anchor="middle">
+          <text x="50" y="195">1.3</text><text x="122" y="195">1.5</text><text x="194" y="195">1.7</text>
+          <text x="266" y="195">1.9</text><text x="338" y="195">2.1</text><text x="410" y="195">2.3</text>
+        </g>
+        <text x="234" y="209" font-size="12" text-anchor="middle" fill="#4a5a68">加振周波数 [Hz]</text>
+        <text x="14" y="104" font-size="12" fill="#4a5a68" transform="rotate(-90 14 104)" text-anchor="middle">トルク RMS [N·m]</text>
+        <line x1="194" y1="34" x2="194" y2="178" stroke="#b3541e" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="200" y="44" font-size="12" fill="#b3541e" font-weight="700">固有振動数 1.70 Hz</text>
+        <polyline points="50,162.5 122,139.4 158,84.7 194,103.2 230,112.4 266,98.5 338,77.5 410,64.3"
+                  fill="none" stroke="#1f5c8b" stroke-width="2.4"/>
+        <g fill="#1f5c8b">
+          <circle cx="50" cy="162.5" r="3.6"/><circle cx="122" cy="139.4" r="3.6"/>
+          <circle cx="158" cy="84.7" r="4.6" fill="#b3541e"/><circle cx="194" cy="103.2" r="3.6"/>
+          <circle cx="230" cy="112.4" r="4.6" fill="#b3541e"/><circle cx="266" cy="98.5" r="3.6"/>
+          <circle cx="338" cy="77.5" r="3.6"/><circle cx="410" cy="64.3" r="3.6"/>
+        </g>
+        <text x="150" y="72" font-size="11.5" fill="#b3541e" text-anchor="middle">ピーク 1.60</text>
+        <text x="240" y="130" font-size="11.5" fill="#b3541e">ディップ 1.80</text>
+      </svg>
+      <div class="cap">図3　アームを正弦駆動したときのトルク RMS（±8°、実測）。慣性負荷による単調増加の上にピークとディップの対が乗る。その遷移点が振子の固有振動数。</div>
+    </div>
+
+    <div class="key">
+      <span class="h">【要点 ①】QDD の代償 ― 反映ロータ慣性</span>
+      アーム慣性の実測値 <b>J_r = 2.13 × 10⁻³ kg·m²</b> は、機構部品の質量から見積もった値の <b>5.3 倍</b>。
+      減速比 10:1 によりロータ慣性が出力軸から <b>10² = 100 倍</b>に見えるため。<br>
+      固有振動数は実測 1.70 Hz、自由振動からの予測 1.745 Hz と <b>3% 以内で一致</b>し、モデルの正しさを裏づけた。
+    </div>
+  </div>
+
+</div>
+<!-- ================= 右列 ================= -->
+<div class="col">
+
+  <div class="blk" style="flex:202 0 0">
+    <span class="tag">5. 線形化と不安定性</span>
+    <div class="eq">
+      α = 0 まわりで線形化：　<span class="m">ẋ = A x + B u</span>　　x = ( θ, α, θ̇, α̇ )ᵀ<br>
+      Δ = P₁P₂ − P₃² &gt; 0　　A₄₂ = P₁P₄g / Δ　　B = ( 0, 0, P₂/Δ, −P₃/Δ )ᵀ
+    </div>
+    <div class="key" style="flex:1">
+      <span class="h">【要点 ②】不安定さを時間で測る</span>
+      A の固有値は { 0,　<b>+11.1</b>,　−9.2,　−14.3 } rad/s。<br>
+      不安定極 <b>λ = 11.1 rad/s → 時定数 90 ms</b>。<b>90 ms 放置すると誤差が e 倍</b>になる。
+      制御周期・通信遅れ・センサ分解能の要求は、すべてこの一つの数字から逆算した。
+    </div>
+    <p style="font-size:0.9cqw" class="u">オブザーバ極は −82 ± 81j。前進 Euler 法の数値安定条件から <b>dt &lt; 12.4 ms</b> が要求される（7 章で実測と照合）。</p>
+  </div>
+
+  <div class="blk" style="flex:428 0 0">
+    <span class="tag">6. 制御器設計</span>
+
+    <h4>6-1　倒立保持：LQR ＋ カルマンフィルタ</h4>
+    <div class="eq" style="font-size:0.95cqw;padding:0.4cqw 0.6cqw">
+      AᵀP + PA − PBR⁻¹BᵀP + Q = 0　　u = −K x̂,　K = R⁻¹BᵀP
+    </div>
+    <ul style="font-size:0.95cqw">
+      <li>重み Q は Bryson 則（許容偏差の逆二乗）で決定。</li>
+      <li>K = ( −5.00, −18.87, −1.53, −1.45 )、閉ループ極 −179.7 / −38.9 / −5.2 ± 3.4j。</li>
+      <li>角速度は差分でなく<b>推定</b>する。0.176° の量子化値を微分するとノイズが乗るため。</li>
+    </ul>
+
+    <h4>6-2　振り上げ：エネルギー整形</h4>
+    <div class="eq" style="font-size:0.95cqw;padding:0.4cqw 0.6cqw">
+      u = k_e ( E − E_top ) · sign( α̇ cos α )　　k_e = 30
+    </div>
+    <ul style="font-size:0.95cqw">
+      <li>V = ½(E − E_top)² とおくと V̇ ≤ 0。エネルギーは単調に目標へ近づく。</li>
+      <li>ただし真上への到達は<b>理論上は無限時間</b>かかる → 捕捉の切替が原理的に必要。</li>
+      <li>アーム引き戻し項（|θ| &gt; 30° で Kp = 5.0）を併用。無いと 0.4 秒で可動端 ±140° に達する。</li>
+    </ul>
+
+    <div class="key">
+      <span class="h">【要点 ③】6-3　切替：最小射影法</span>
+      <span style="display:block;text-align:center;margin:0.15cqw 0">W(x) = min ( V(x),　(E − E_r)² + c )　　V(x) = xᵀP x</span>
+      c = 10 とすると保証角は <b>|α| ≤ √( c (P⁻¹)₂₂ ) = 55.1°</b>。
+      従来の発見的な条件（|α| &lt; 25° かつ |α̇| &lt; 3.0）を、<b>Lyapunov 関数から計算した判定</b>に置き換えた。
+    </div>
+
+    <h4>6-4　摩擦補償</h4>
+    <ul style="font-size:0.95cqw">
+      <li>静止摩擦 0.147 N·m。平衡点では必要トルクが 0 に近づくので<b>必ず不感帯に入る</b>。</li>
+      <li>u_f = τ_c tanh( θ̇ / ε )　正転 0.109 / 逆転 0.143 N·m、ε = 0.15 rad/s。</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+<!-- ================= ブロック線図帯 ================= -->
+<div class="blk bd">
+  <span class="tag">図4　制御系全体のブロック線図</span>
+  <div class="row">
+    <div class="fig" style="flex:80 0 0;background:#fff;border:0">
+      <svg class="sv" viewBox="0 0 1150 200" preserveAspectRatio="xMidYMid meet">
+        <rect x="12" y="42" width="150" height="54" rx="4" class="bx2"/>
+        <text x="87" y="64" font-size="16" text-anchor="middle" font-weight="700">切替器</text>
+        <text x="87" y="84" font-size="13" text-anchor="middle">W = min(V, (E−E_r)²+c)</text>
+
+        <rect x="180" y="8" width="180" height="46" rx="4" class="bx"/>
+        <text x="270" y="27" font-size="15" text-anchor="middle">振り上げ則</text>
+        <text x="270" y="45" font-size="13" text-anchor="middle">u = k_e(E−E_top)sign(α̇cosα)</text>
+
+        <rect x="180" y="84" width="180" height="46" rx="4" class="bx"/>
+        <text x="270" y="103" font-size="15" text-anchor="middle">安定化則（LQR）</text>
+        <text x="270" y="121" font-size="13" text-anchor="middle">u = −K x̂</text>
+
+        <rect x="380" y="42" width="120" height="54" rx="4" class="bx"/>
+        <text x="440" y="64" font-size="15" text-anchor="middle">摩擦補償</text>
+        <text x="440" y="83" font-size="13" text-anchor="middle">τ_c tanh(θ̇/ε)</text>
+
+        <rect x="520" y="42" width="110" height="54" rx="4" class="bx"/>
+        <text x="575" y="64" font-size="15" text-anchor="middle">トルク上限</text>
+        <text x="575" y="83" font-size="13" text-anchor="middle">±1.0 N·m</text>
+
+        <rect x="650" y="42" width="130" height="54" rx="4" class="bx"/>
+        <text x="715" y="64" font-size="15" text-anchor="middle">モータ</text>
+        <text x="715" y="83" font-size="13" text-anchor="middle">DM-J4310</text>
+
+        <rect x="800" y="42" width="140" height="54" rx="4" class="bx2"/>
+        <text x="870" y="64" font-size="15" text-anchor="middle" font-weight="700">Furuta 振子</text>
+        <text x="870" y="83" font-size="13" text-anchor="middle">（プラント）</text>
+
+        <rect x="960" y="42" width="120" height="54" rx="4" class="bx"/>
+        <text x="1020" y="64" font-size="15" text-anchor="middle">エンコーダ</text>
+        <text x="1020" y="83" font-size="13" text-anchor="middle">0.176°/count</text>
+
+        <rect x="700" y="148" width="180" height="42" rx="4" class="bx"/>
+        <text x="790" y="174" font-size="15" text-anchor="middle">カルマンフィルタ</text>
+
+        <path d="M162 69 L171 69 L171 31 L180 31" class="ar"/>
+        <path d="M162 69 L171 69 L171 107 L180 107" class="ar"/>
+        <path d="M360 31 L370 31 L370 66 L380 66" class="ar"/>
+        <path d="M360 107 L370 107 L370 72 L380 72" class="ar"/>
+        <line x1="500" y1="69" x2="518" y2="69" class="ar"/>
+        <line x1="630" y1="69" x2="648" y2="69" class="ar"/>
+        <line x1="780" y1="69" x2="798" y2="69" class="ar"/>
+        <line x1="940" y1="69" x2="958" y2="69" class="ar"/>
+        <text x="512" y="60" font-size="13" fill="#4a5a68">u</text>
+        <text x="944" y="36" font-size="13" fill="#4a5a68">θ, α</text>
+        <path d="M1020 96 L1020 169 L884 169" class="arf"/>
+        <path d="M700 169 L36 169 L36 99" class="arf"/>
+        <path d="M270 169 L270 134" class="arf"/>
+        <text x="470" y="163" font-size="14" fill="#b3541e">推定状態  x̂</text>
+      </svg>
+    </div>
+    <div style="flex:20 0 0;display:flex;align-items:center">
+      <div class="key" style="margin:0">
+        <span class="h">これは PID 制御ではない</span>
+        誤差の比例・積分・微分ではなく、<b>モデルから求めた状態フィードバック</b>である。
+        4 つの状態それぞれに固有のゲインが掛かり、その値は Riccati 方程式の解として一意に決まる。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 実験結果 ================= -->
+<div class="blk res">
+  <span class="tag">7. 実験結果（実機 297 試行）</span>
+  <div class="row">
+
+    <div class="fig">
+      <svg class="sv" viewBox="0 0 380 215" preserveAspectRatio="xMidYMid meet">
+        <line x1="52" y1="26" x2="52" y2="175" class="ax"/>
+        <line x1="52" y1="175" x2="368" y2="175" class="ax"/>
+        <g class="gd"><line x1="52" y1="30" x2="368" y2="30"/><line x1="52" y1="66" x2="368" y2="66"/>
+          <line x1="52" y1="103" x2="368" y2="103"/><line x1="52" y1="139" x2="368" y2="139"/></g>
+        <g font-size="11" fill="#4a5a68" text-anchor="end">
+          <text x="47" y="179">0</text><text x="47" y="143">25</text><text x="47" y="107">50</text>
+          <text x="47" y="70">75</text><text x="47" y="34">100</text></g>
+        <text x="14" y="100" font-size="12" fill="#4a5a68" transform="rotate(-90 14 100)" text-anchor="middle">成功率 [%]</text>
+        <rect x="80" y="54.9" width="58" height="120.1" fill="#1f5c8b"/>
+        <rect x="180" y="50.7" width="58" height="124.3" fill="#9fb4c4"/>
+        <rect x="280" y="54.2" width="58" height="120.8" fill="#2b6f45"/>
+        <g stroke="#16202a" stroke-width="1.6">
+          <line x1="109" y1="41.0" x2="109" y2="80.0"/><line x1="101" y1="41.0" x2="117" y2="41.0"/><line x1="101" y1="80.0" x2="117" y2="80.0"/>
+          <line x1="209" y1="38.3" x2="209" y2="75.8"/><line x1="201" y1="38.3" x2="217" y2="38.3"/><line x1="201" y1="75.8" x2="217" y2="75.8"/>
+          <line x1="309" y1="34.3" x2="309" y2="111.8"/><line x1="301" y1="34.3" x2="317" y2="34.3"/><line x1="301" y1="111.8" x2="317" y2="111.8"/>
+        </g>
+        <g font-size="13" text-anchor="middle" font-weight="700" fill="#fff">
+          <text x="109" y="74">82.8%</text><text x="209" y="70" fill="#16202a">85.7%</text><text x="309" y="74">83.3%</text></g>
+        <g font-size="12" text-anchor="middle" fill="#16202a">
+          <text x="109" y="192">0.8 N·m</text><text x="209" y="192">1.5 N·m</text><text x="309" y="192">1.0 N·m</text>
+          <text x="109" y="207" font-size="11" fill="#4a5a68">n = 29</text>
+          <text x="209" y="207" font-size="11" fill="#b3541e">n = 28・不採用</text>
+          <text x="309" y="207" font-size="11" fill="#2b6f45">n = 6・採用</text></g>
+      </svg>
+      <div class="cap">図5　振り上げトルク上限に対する成功率（誤差棒は Wilson 95% 信頼区間）。1.5 N·m は速すぎて危険なうえ、0.8 N·m との差は統計的に無い。</div>
+    </div>
+
+    <div class="fig">
+      <svg class="sv" viewBox="0 0 380 215" preserveAspectRatio="xMidYMid meet">
+        <line x1="45" y1="26" x2="45" y2="175" class="ax"/>
+        <line x1="45" y1="175" x2="368" y2="175" class="ax"/>
+        <g class="gd"><line x1="45" y1="35" x2="368" y2="35"/><line x1="45" y1="70" x2="368" y2="70"/>
+          <line x1="45" y1="105" x2="368" y2="105"/><line x1="45" y1="140" x2="368" y2="140"/></g>
+        <g font-size="11" fill="#4a5a68" text-anchor="end">
+          <text x="40" y="179">0</text><text x="40" y="144">20</text><text x="40" y="109">40</text>
+          <text x="40" y="74">60</text></g>
+        <text x="12" y="100" font-size="12" fill="#4a5a68" transform="rotate(-90 12 100)" text-anchor="middle">試行数</text>
+        <g fill="#1f5c8b">
+          <rect x="47" y="101.9" width="28" height="73.1"/><rect x="79" y="35" width="28" height="140"/>
+          <rect x="111" y="108.1" width="28" height="66.9"/><rect x="143" y="141.6" width="28" height="33.4"/>
+          <rect x="175" y="141.6" width="28" height="33.4"/><rect x="207" y="164.6" width="28" height="10.4"/>
+          <rect x="239" y="168.7" width="28" height="6.3"/><rect x="271" y="168.7" width="28" height="6.3"/>
+          <rect x="303" y="172.9" width="28" height="2.1"/><rect x="335" y="118.6" width="28" height="56.4" fill="#9fb4c4"/>
+        </g>
+        <g font-size="11" fill="#4a5a68" text-anchor="middle">
+          <text x="61" y="189">0</text><text x="125" y="189">2</text><text x="189" y="189">4</text>
+          <text x="253" y="189">6</text><text x="317" y="189">8</text><text x="349" y="189">9+</text></g>
+        <text x="200" y="207" font-size="12" fill="#4a5a68" text-anchor="middle">振り上げに要した時間 [s]</text>
+        <line x1="109" y1="26" x2="109" y2="175" stroke="#b3541e" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="116" y="42" font-size="12" fill="#b3541e" font-weight="700">中央値 2.0 s</text>
+      </svg>
+      <div class="cap">図6　振り上げ成功 205 試行の所要時間。52% が 2 秒以内に立ち上がる。9 秒以上の裾は設定を詰める前の初期の試行。</div>
+    </div>
+
+    <div class="fig">
+      <svg class="sv" viewBox="0 0 380 215" preserveAspectRatio="xMidYMid meet">
+        <line x1="100" y1="26" x2="100" y2="150" class="ax"/>
+        <line x1="100" y1="150" x2="366" y2="150" class="ax"/>
+        <rect x="100" y="42" width="65" height="34" fill="#2b6f45"/>
+        <rect x="100" y="96" width="231" height="34" fill="#b3541e"/>
+        <g font-size="12" text-anchor="end" fill="#16202a">
+          <text x="94" y="56">正常時</text><text x="94" y="72" font-size="11" fill="#4a5a68">575 Hz</text>
+          <text x="94" y="110">周期崩壊時</text><text x="94" y="126" font-size="11" fill="#4a5a68">130 Hz</text></g>
+        <g font-size="12.5" font-weight="700" fill="#fff">
+          <text x="172" y="64" fill="#16202a">5.0 ms</text><text x="240" y="118">17.8 ms</text></g>
+        <line x1="261" y1="30" x2="261" y2="150" stroke="#16202a" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="266" y="40" font-size="12" font-weight="700">理論限界 12.4 ms</text>
+        <g font-size="11" fill="#4a5a68" text-anchor="middle">
+          <text x="100" y="164">0</text><text x="165" y="164">5</text><text x="230" y="164">10</text>
+          <text x="296" y="164">15</text><text x="361" y="164">20</text></g>
+        <text x="233" y="180" font-size="12" fill="#4a5a68" text-anchor="middle">1 周期あたりの最大 dt [ms]</text>
+        <text x="12" y="203" font-size="12" fill="#b3541e">限界を越えるとトルクが ±2.0 N·m を往復するバンバン動作になり発振した。</text>
+      </svg>
+      <div class="cap">図7　オブザーバの更新周期と数値安定限界。5 章で求めた dt &lt; 12.4 ms が実機で境界として現れた。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= まとめ ================= -->
+<div class="blk sum">
+  <span class="tag">8. まとめと今後</span>
+  <div class="row">
+    <div style="flex:64 0 0">
+      <ul style="font-size:0.92cqw">
+        <li><b>理論値と実機が一致した 3 点</b>　不安定極の時定数 90 ms ／ 数値安定限界 12.4 ms（実機の破綻境界と一致）／ 固有振動数 1.70 Hz（予測 1.745 Hz）。</li>
+        <li><b>QDD の代償を実測で確認</b>　反映ロータ慣性によりアーム慣性が見積りの 5.3 倍。設計段階で見落としやすい量である。</li>
+        <li><b>切替を計算で決めた</b>　最小射影法により、捕捉条件を発見的な閾値から Lyapunov 関数に基づく判定へ置き換えた。最長で 61.6 秒の連続倒立を達成。</li>
+        <li><b>今後</b>　倒立保持中にアーム角が原点へ戻らず 27〜35° に居着く現象の解明、外乱応答の定量評価、制御周期の崩壊への対策。</li>
+      </ul>
+    </div>
+    <div style="flex:36 0 0;border-left:0.12cqw solid var(--soft);padding-left:0.7cqw">
+      <p style="font-size:0.85cqw;line-height:1.45" class="u">
+        <b style="color:var(--tab)">参考文献</b><br>
+        [1] 笠原雅人, 加藤盛仁：古田の振子の制御, 小山工業高等専門学校研究紀要, 第44号, pp.137–142 (2011)<br>
+        [2] K. J. Åström, K. Furuta: Swinging up a pendulum by energy control, <i>Automatica</i>, 36(2), pp.287–295 (2000)<br>
+        [3] （最小射影法の出典）
+      </p>
+    </div>
+  </div>
+</div>
+
+</div></div>
+</html>
